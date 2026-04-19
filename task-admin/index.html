@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exp 2: Five-Option Foraging Task</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ============ Consent Screen ============ -->
+  <div id="screen-consent" class="screen">
+    <h1>Informed Consent</h1>
+    <div class="consent-body">
+      <p><strong>Study Title:</strong> Integrated Theory of Behavior Networks: Decision-Making Under Dynamic Conditions</p>
+      <p><strong>Principal Investigator:</strong> David J. Cox, Ph.D., Endicott College</p>
+      <p>
+        You are being invited to participate in a research study. Please read
+        the following information carefully before deciding whether to take part.
+      </p>
+      <p>
+        <strong>Purpose of the Research:</strong> This study investigates how people make repeated choices when
+        the consequences of those choices change unpredictably over time. We are testing an integrated theoretical model
+        that combines concepts from behavior analysis and decision-making research. Your responses will help us understand
+        how people adapt to changing decision environments.
+      </p>
+      <p>
+        <strong>What You Will Do:</strong> You will play a computer-based foraging task lasting approximately 18 minutes total.
+        In this task, you will see five buttons on the screen and can click any button at any time. Each button may earn you points,
+        but the point value for each button will change throughout the game in ways that are not announced to you. Your goal is to
+        earn as many points as possible. The task is divided into two blocks of approximately 7 minutes each, with a 30-second break
+        in between. You will also experience brief pauses (quiescence periods) during which the game temporarily becomes unresponsive
+        and you cannot earn points, in order to measure how you respond when rewards are unavailable.
+      </p>
+      <p>
+        <strong>Risks:</strong> There are no known risks to you beyond those of everyday computer use. You may experience
+        mild boredom or fatigue during the task. No harmful stimuli are presented.
+      </p>
+      <p>
+        <strong>Benefits:</strong> There are no direct benefits to your participation. However, your data will contribute
+        to scientific understanding of decision-making and behavior dynamics, which may inform future research on learning
+        and adaptation in humans.
+      </p>
+      <p>
+        <strong>Confidentiality:</strong> Your responses will be recorded and associated with an anonymous identifier. Only your
+        Prolific ID will be collected, and this is stored separately from your task responses. No other personally identifying
+        information will be collected. All data is stored securely and will be used only for research purposes.
+      </p>
+      <p>
+        <strong>Voluntary Participation:</strong> Your participation is entirely voluntary. You may withdraw at any time by
+        closing your browser, with no penalty or loss of compensation. Withdrawal will not affect your relationship with Prolific
+        or Endicott College.
+      </p>
+      <p>
+        <strong>Contact Information:</strong> If you have questions about this study, you may contact the Principal Investigator,
+        David J. Cox, at dcox@endicott.edu. If you have questions about your rights as a research participant, you may contact
+        the Endicott College Institutional Review Board.
+      </p>
+      <div class="consent-check">
+        <label>
+          <input type="checkbox" id="consent-checkbox">
+          I have read and understood the information above, and I voluntarily
+          agree to participate in this study.
+        </label>
+      </div>
+    </div>
+    <button id="btn-consent" class="btn-primary" disabled>Continue</button>
+  </div>
+
+  <!-- ============ Prolific ID Screen ============ -->
+  <div id="screen-prolific" class="screen hidden">
+    <h1>Participant Information</h1>
+    <p>Please enter your Prolific ID:</p>
+    <input type="text" id="prolific-id-input" class="text-input" placeholder="Enter Prolific ID">
+    <button id="btn-prolific" class="btn-primary" disabled>Continue</button>
+  </div>
+
+  <!-- ============ Instructions Screen ============ -->
+  <div id="screen-instructions" class="screen hidden">
+    <h1>Game Instructions</h1>
+    <p>Click any of the 5 buttons to earn points. The buttons have different reward rates that may change.</p>
+    <p>Your goal: earn as many points as possible.</p>
+    <p>Two blocks, ~7 minutes each. A 30-second break between blocks.</p>
+    <p>Click "Continue" when ready to begin...</p>
+    <button class="btn-primary" onclick="document.getElementById('countdown-display').parentElement.classList.remove('hidden')">Continue</button>
+  </div>
+
+  <!-- ============ Countdown Screen ============ -->
+  <div id="countdown-screen" class="screen hidden">
+    <div class="countdown-box">
+      <p>Block starting in:</p>
+      <div id="countdown-display" class="countdown-text">5</div>
+    </div>
+  </div>
+
+  <!-- ============ Main Task Screen ============ -->
+  <div id="screen-task" class="screen hidden">
+    <div class="task-header">
+      <div class="score-box">
+        <p>Score</p>
+        <div id="score-display" class="score-value">0</div>
+      </div>
+      <div class="phase-box">
+        <p id="phase-display">Phase 1</p>
+      </div>
+      <div class="timer-box">
+        <p id="timer-display">7:00</p>
+      </div>
+    </div>
+
+    <div class="buttons-container">
+      <button class="option-button" data-option="0">Option 1</button>
+      <button class="option-button" data-option="1">Option 2</button>
+      <button class="option-button" data-option="2">Option 3</button>
+      <button class="option-button" data-option="3">Option 4</button>
+      <button class="option-button" data-option="4">Option 5</button>
+    </div>
+
+    <div class="latent-values">
+      <div class="latent-item">
+        <label>Option 1</label>
+        <div id="latent-display-1" class="latent-bar">0%</div>
+      </div>
+      <div class="latent-item">
+        <label>Option 2</label>
+        <div id="latent-display-2" class="latent-bar">0%</div>
+      </div>
+      <div class="latent-item">
+        <label>Option 3</label>
+        <div id="latent-display-3" class="latent-bar">0%</div>
+      </div>
+      <div class="latent-item">
+        <label>Option 4</label>
+        <div id="latent-display-4" class="latent-bar">0%</div>
+      </div>
+      <div class="latent-item">
+        <label>Option 5</label>
+        <div id="latent-display-5" class="latent-bar">0%</div>
+      </div>
+    </div>
+
+    <div id="leaderboard-box" class="leaderboard">
+      <h3>Leaderboard</h3>
+      <table id="leaderboard-table">
+        <!-- Populated by JS -->
+      </table>
+    </div>
+  </div>
+
+  <!-- ============ Quiescence Overlay (Blackout) ============ -->
+  <div id="quiescence-overlay" class="quiescence-overlay hidden">
+    <div class="quiescence-box">
+      <p>Brief pause...</p>
+      <div id="quiescence-countdown" class="countdown-text">10.0s</div>
+    </div>
+  </div>
+
+  <!-- ============ Break Screen ============ -->
+  <div id="screen-break" class="screen hidden">
+    <h1>Halfway Break</h1>
+    <p>You've completed Block 1. Take a brief rest.</p>
+    <p>Block 2 is identical in structure.</p>
+    <button id="btn-continue-after-break" class="btn-primary">Continue to Block 2</button>
+  </div>
+
+  <!-- ============ Debrief / Completion ============ -->
+  <div id="screen-debrief" class="screen hidden">
+    <h1>Thank You!</h1>
+    <p>Your data has been recorded.</p>
+    <p><strong>Your Prolific completion code:</strong></p>
+    <div class="completion-code-box">
+      <code id="completion-code">CEAMUBR9</code>
+    </div>
+    <p>Copy and paste this code into Prolific to confirm completion.</p>
+  </div>
+
+  <!-- ============ Messages ============ -->
+  <div id="message-box" class="message-box hidden"></div>
+  <div id="error-box" class="error-box hidden"></div>
+
+  <!-- ============ ADMIN DEBUG PANEL ============ -->
+  <div id="admin-panel" class="admin-panel">
+    <div class="admin-header">
+      <h3>ADMIN DEBUG PANEL</h3>
+      <button id="admin-toggle" class="admin-toggle">Collapse</button>
+    </div>
+    <div id="admin-content" class="admin-content">
+      <div class="debug-section">
+        <h4>Session</h4>
+        <div id="debug-session" class="debug-text"></div>
+      </div>
+      <div class="debug-section">
+        <h4>Current Phase</h4>
+        <div id="debug-phase" class="debug-text"></div>
+      </div>
+      <div class="debug-section">
+        <h4>Phase Progress</h4>
+        <div id="debug-progress" class="debug-text"></div>
+      </div>
+      <div class="debug-section">
+        <h4>Latent Values (Pre-Click)</h4>
+        <div id="debug-latent" class="debug-text"></div>
+      </div>
+      <div class="debug-section">
+        <h4>Coupling Matrix (Block 2)</h4>
+        <div id="debug-coupling" class="debug-text"></div>
+      </div>
+      <div class="debug-section">
+        <h4>Last Click</h4>
+        <div id="debug-click" class="debug-text"></div>
+      </div>
+      <div class="debug-section">
+        <h4>Quiescence State</h4>
+        <div id="debug-quiescence" class="debug-text"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ Scripts ============ -->
+  <script src="js/config.js"></script>
+  <script src="js/state.js"></script>
+  <script src="js/logger.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/admin-debug.js"></script>
+
+</body>
+</html>
