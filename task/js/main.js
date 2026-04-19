@@ -79,6 +79,7 @@ class ExperimentManager {
 
     this.ui.showScreen("screen-task");
     this.ui.setButtonStates(true);
+    this.ui.updateLeaderboard(this.config.leaderboard);
     this.ui.showMessage(`Block ${blockId} started`, 2000);
 
     // Start timer update loop
