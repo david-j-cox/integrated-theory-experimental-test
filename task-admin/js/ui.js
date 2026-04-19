@@ -97,9 +97,12 @@ class UIManager {
     const countdown = document.getElementById("quiescence-countdown");
     if (countdown) {
       let remainingMs = durationMs;
+      // Display initial countdown value
+      countdown.textContent = `${(remainingMs / 1000).toFixed(1)}s`;
+
       const interval = setInterval(() => {
         remainingMs -= 100;
-        const sec = (remainingMs / 1000).toFixed(1);
+        const sec = Math.max(0, remainingMs / 1000).toFixed(1);
         countdown.textContent = `${sec}s`;
         if (remainingMs <= 0) {
           clearInterval(interval);
