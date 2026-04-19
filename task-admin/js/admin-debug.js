@@ -24,12 +24,14 @@ class AdminDebugPanel {
 
   toggle() {
     this.isExpanded = !this.isExpanded;
-    if (this.isExpanded) {
-      this.contentEl.classList.remove('hidden');
-      this.toggleBtn.textContent = 'Collapse';
-    } else {
-      this.contentEl.classList.add('hidden');
-      this.toggleBtn.textContent = 'Expand';
+    if (this.contentEl) {
+      if (this.isExpanded) {
+        this.contentEl.classList.remove('hidden');
+        if (this.toggleBtn) this.toggleBtn.textContent = 'Collapse';
+      } else {
+        this.contentEl.classList.add('hidden');
+        if (this.toggleBtn) this.toggleBtn.textContent = 'Expand';
+      }
     }
   }
 
@@ -40,9 +42,10 @@ class AdminDebugPanel {
   update() {
     if (!this.manager) return;
 
-    const state = this.manager.state;
-    const config = this.manager.config;
-    const logger = this.manager.logger;
+    try {
+      const state = this.manager.state;
+      const config = this.manager.config;
+      const logger = this.manager.logger;
 
     // Session info
     document.getElementById('debug-session').textContent =
@@ -113,6 +116,9 @@ class AdminDebugPanel {
       `Clicks before probe: ${config.quiescenceProbes.clicksBeforeProbe}\n` +
       `Probe transitions (per block): ${config.quiescenceProbes.transitionsWithProbe.join(', ')}\n` +
       `Post-release latency recorded: ${this.manager.quiescencePostReleaseStartTime ? 'pending' : 'none'}`;
+    } catch (e) {
+      // Silently ignore errors during update (e.g., if state is being modified)
+    }
   }
 
   log(msg) {
