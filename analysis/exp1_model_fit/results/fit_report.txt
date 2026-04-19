@@ -1,0 +1,27 @@
+Stage 0: Unified Eq. (14) Fit to Exp 1 Data
+==================================================
+
+Date: 2026-04-17 19:27
+Participants: 60
+Model: unified Eq. (14), 2D reduction (n=2)
+Free parameters (7): k_field, omega_base, zeta, m0, gain, a_sensitivity, temperature
+Optimizer: differential_evolution, maxiter=200
+
+Mean NLL:      572.71 (SD 123.07)
+Mean AIC:      1159.42 (SD 246.14)
+Mean BIC:      1193.00 (SD 247.96)
+Mean accuracy: 0.6440 (SD 0.0459)
+Converged:     29/60
+
+Parameter means (SD):
+  k_field        : 6.0960 (2.7534)
+  omega_base     : 1.1944 (0.5356)
+  zeta           : 2.2111 (1.8223)
+  m0             : 6.3103 (3.5260)
+  gain           : 0.7057 (1.8717)
+  a_sensitivity  : 1.2163 (1.0227)
+  temperature    : 0.4480 (0.2197)
+
+Gate check criterion: unified fit NLL must be within 5% of
+the best continuous-dynamics model from Exp 1's leaderboard.
+Compare these results against the 22-model comparison.

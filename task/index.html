@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exp 2: Five-Option Foraging Task</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ============ Consent Screen ============ -->
+  <div id="screen-consent" class="screen">
+    <h1>Informed Consent</h1>
+    <div class="consent-body">
+      <p><strong>Study Title:</strong> Integrated Theory of Behavior Networks</p>
+      <p><strong>Principal Investigator:</strong> David J. Cox, Endicott College</p>
+      <p>You are being invited to participate in a research study investigating decision-making under dynamic conditions.</p>
+      <p><strong>What you will do:</strong> Play a computer game (~18 minutes) where you click buttons to earn points. Two blocks of play with a brief break between.</p>
+      <p><strong>Risks:</strong> Minimal. You may experience mild boredom or fatigue.</p>
+      <p><strong>Benefits:</strong> Your data contributes to scientific understanding of behavior dynamics.</p>
+      <p><strong>Confidentiality:</strong> Anonymous via Prolific ID. No personal information collected.</p>
+      <p><strong>Voluntary:</strong> You may withdraw anytime by closing your browser with no penalty.</p>
+      <div class="consent-check">
+        <label>
+          <input type="checkbox" id="consent-checkbox">
+          I have read and understood the above, and voluntarily agree to participate.
+        </label>
+      </div>
+    </div>
+    <button id="btn-consent" class="btn-primary" disabled>Continue</button>
+  </div>
+
+  <!-- ============ Prolific ID Screen ============ -->
+  <div id="screen-prolific" class="screen hidden">
+    <h1>Participant Information</h1>
+    <p>Please enter your Prolific ID:</p>
+    <input type="text" id="prolific-id-input" class="text-input" placeholder="Enter Prolific ID">
+    <button id="btn-prolific" class="btn-primary" disabled>Continue</button>
+  </div>
+
+  <!-- ============ Instructions Screen ============ -->
+  <div id="screen-instructions" class="screen hidden">
+    <h1>Game Instructions</h1>
+    <p>Click any of the 5 buttons to earn points. The buttons have different reward rates that may change.</p>
+    <p>Your goal: earn as many points as possible.</p>
+    <p>Two blocks, ~7 minutes each. A 30-second break between blocks.</p>
+    <p>Click "Continue" when ready to begin...</p>
+    <button class="btn-primary" onclick="document.getElementById('countdown-display').parentElement.classList.remove('hidden')">Continue</button>
+  </div>
+
+  <!-- ============ Countdown Screen ============ -->
+  <div id="countdown-screen" class="screen hidden">
+    <div class="countdown-box">
+      <p>Block starting in:</p>
+      <div id="countdown-display" class="countdown-text">5</div>
+    </div>
+  </div>
+
+  <!-- ============ Main Task Screen ============ -->
+  <div id="screen-task" class="screen hidden">
+    <div class="task-header">
+      <div class="score-box">
+        <p>Score</p>
+        <div id="score-display" class="score-value">0</div>
+      </div>
+      <div class="phase-box">
+        <p id="phase-display">Phase 1</p>
+      </div>
+      <div class="timer-box">
+        <p id="timer-display">7:00</p>
+      </div>
+    </div>
+
+    <div class="buttons-container">
+      <button class="option-button" data-option="0">Option 1</button>
+      <button class="option-button" data-option="1">Option 2</button>
+      <button class="option-button" data-option="2">Option 3</button>
+      <button class="option-button" data-option="3">Option 4</button>
+      <button class="option-button" data-option="4">Option 5</button>
+    </div>
+
+    <div class="latent-values">
+      <div class="latent-item">
+        <label>Option 1</label>
+        <div id="latent-display-1" class="latent-bar">0%</div>
+      </div>
+      <div class="latent-item">
+        <label>Option 2</label>
+        <div id="latent-display-2" class="latent-bar">0%</div>
+      </div>
+      <div class="latent-item">
+        <label>Option 3</label>
+        <div id="latent-display-3" class="latent-bar">0%</div>
+      </div>
+      <div class="latent-item">
+        <label>Option 4</label>
+        <div id="latent-display-4" class="latent-bar">0%</div>
+      </div>
+      <div class="latent-item">
+        <label>Option 5</label>
+        <div id="latent-display-5" class="latent-bar">0%</div>
+      </div>
+    </div>
+
+    <div id="leaderboard-box" class="leaderboard">
+      <h3>Leaderboard</h3>
+      <table id="leaderboard-table">
+        <!-- Populated by JS -->
+      </table>
+    </div>
+  </div>
+
+  <!-- ============ Quiescence Overlay (Blackout) ============ -->
+  <div id="quiescence-overlay" class="quiescence-overlay hidden">
+    <div class="quiescence-box">
+      <p>Brief pause...</p>
+      <div id="quiescence-countdown" class="countdown-text">10.0s</div>
+    </div>
+  </div>
+
+  <!-- ============ Break Screen ============ -->
+  <div id="screen-break" class="screen hidden">
+    <h1>Halfway Break</h1>
+    <p>You've completed Block 1. Take a brief rest.</p>
+    <p>Block 2 is identical in structure.</p>
+    <button id="btn-continue-after-break" class="btn-primary">Continue to Block 2</button>
+  </div>
+
+  <!-- ============ Debrief / Completion ============ -->
+  <div id="screen-debrief" class="screen hidden">
+    <h1>Thank You!</h1>
+    <p>Your data has been recorded.</p>
+    <p><strong>Your Prolific completion code:</strong></p>
+    <div class="completion-code-box">
+      <code id="completion-code">CEAMUBR9</code>
+    </div>
+    <p>Copy and paste this code into Prolific to confirm completion.</p>
+  </div>
+
+  <!-- ============ Messages ============ -->
+  <div id="message-box" class="message-box hidden"></div>
+  <div id="error-box" class="error-box hidden"></div>
+
+  <!-- ============ Scripts ============ -->
+  <script src="js/config.js"></script>
+  <script src="js/state.js"></script>
+  <script src="js/logger.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/main.js"></script>
+
+</body>
+</html>
