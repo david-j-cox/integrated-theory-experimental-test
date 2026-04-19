@@ -284,6 +284,14 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Instructions screen continue button
+  const instructionsBtn = document.getElementById("btn-instructions-continue");
+  if (instructionsBtn) {
+    instructionsBtn.addEventListener("click", () => {
+      experiment.initializeSession();
+    });
+  }
+
   // Task buttons (5 options)
   for (let i = 0; i < 5; i++) {
     const btn = document.querySelector(`[data-option="${i}"]`);
