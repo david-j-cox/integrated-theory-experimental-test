@@ -114,6 +114,11 @@ class UIManager {
       };
 
       updateCountdown();
+
+      // Safeguard: force hide after duration + 100ms buffer
+      setTimeout(() => {
+        this.hideQuiescenceProbe();
+      }, durationMs + 100);
     }
   }
 
