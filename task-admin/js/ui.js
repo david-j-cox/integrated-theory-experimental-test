@@ -124,7 +124,10 @@ class UIManager {
 
   hideQuiescenceProbe() {
     const overlay = document.getElementById("quiescence-overlay");
-    if (overlay) overlay.classList.add("hidden");
+    if (overlay) {
+      overlay.classList.add("hidden");
+      overlay.style.display = "none"; // Override inline style
+    }
   }
 
   // ---- Countdown screen ----
