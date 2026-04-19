@@ -14,7 +14,9 @@ class AdminDebugPanel {
     this.manager = null; // Will be set by main.js after ExperimentManager instantiation
 
     // Toggle button
-    this.toggleBtn.addEventListener('click', () => this.toggle());
+    if (this.toggleBtn) {
+      this.toggleBtn.addEventListener('click', () => this.toggle());
+    }
 
     // Start update loop
     this.updateInterval = setInterval(() => this.update(), 200);
@@ -120,4 +122,6 @@ class AdminDebugPanel {
 }
 
 // Instantiate and attach to window for access by main.js
-window.adminDebugPanel = new AdminDebugPanel();
+document.addEventListener("DOMContentLoaded", () => {
+  window.adminDebugPanel = new AdminDebugPanel();
+});
