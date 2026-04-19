@@ -49,8 +49,9 @@ class ExperimentManager {
     const blockLengthOrder = Math.random() < 0.5 ? "normal" : "mirror";
     const couplingOrder = Math.random() < 0.5 ? "indep-then-coupled" : "coupled-then-indep";
 
-    this.config.blockOrder = couplingOrder;
-    this.config.phaseLengthOrder = blockLengthOrder;
+    // Store on manager instance, not on frozen CONFIG
+    this.blockOrder = couplingOrder;
+    this.phaseLengthOrder = blockLengthOrder;
 
     this.logger.sessionMeta.blockOrder = couplingOrder;
     this.logger.sessionMeta.phaseLengthOrder = blockLengthOrder;
@@ -197,7 +198,7 @@ class ExperimentManager {
   logClickEvent(optionIdx, elapsedMs, clickData, quiescenceFlag) {
     const blockId = this.state.currentBlockId;
     const couplingCondition = blockId === 1 ? "independent" : "coupled";
-    const phaseLengthCondition = blockId === 1 ? this.config.phaseLengthOrder : this.config.phaseLengthOrder; // same for both blocks in Exp 2
+    const phaseLengthCondition = blockId === 1 ? this.phaseLengthOrder : this.phaseLengthOrder; // same for both blocks in Exp 2
 
     this.logger.logEvent({
       timestamp_ms: Math.round(elapsedMs),
