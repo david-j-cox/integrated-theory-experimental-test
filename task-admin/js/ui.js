@@ -74,13 +74,25 @@ class UIManager {
     }
   }
 
-  updateLeaderboard(leaderboard) {
+  updateLeaderboard(leaderboard, playerScore = 0) {
     const table = document.getElementById("leaderboard-table");
     if (!table) return;
     table.innerHTML = "";
-    leaderboard.forEach((entry, idx) => {
+
+    // Combine leaderboard entries with player's current score
+    const all = [
+      ...leaderboard,
+      { name: "You", score: playerScore, isPlayer: true }
+    ];
+
+    // Sort by score descending
+    all.sort((a, b) => b.score - a.score);
+
+    // Render sorted leaderboard
+    all.forEach((entry, idx) => {
       const row = document.createElement("tr");
-      row.innerHTML = `<td>${idx + 1}</td><td>${entry.name}</td><td>${entry.score}</td>`;
+      row.className = entry.isPlayer ? "player-row" : "";
+      row.innerHTML = `<td>${idx + 1}</td><td>${entry.name}</td><td>${entry.score.toLocaleString()}</td>`;
       table.appendChild(row);
     });
   }

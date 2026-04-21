@@ -336,6 +336,15 @@ strong {
   background: #f9fafb;
 }
 
+#leaderboard-table tr.player-row {
+  background: #dbeafe;
+  font-weight: 600;
+}
+
+#leaderboard-table tr.player-row:hover {
+  background: #bfdbfe;
+}
+
 /* ---- Quiescence Overlay ---- */
 
 .quiescence-overlay {

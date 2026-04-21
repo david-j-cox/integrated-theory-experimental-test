@@ -147,6 +147,7 @@ class ExperimentManager {
     // Update UI
     this.ui.highlightButton(optionIdx);
     this.ui.updateScore(this.state.cumulativeScore);
+    this.ui.updateLeaderboard(this.config.leaderboard, this.state.cumulativeScore);
     this.ui.updatePhaseInfo(this.state.currentPhaseId, this.state.getCurrentPhase().label);
     this.ui.updateLatentValueDisplay(this.state.latentValues);
 
